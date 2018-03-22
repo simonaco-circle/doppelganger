@@ -21,7 +21,7 @@ export class FaceService {
       headers: headers
     });
     return this.http
-      .post('CV_URL', file, options)
+      .post(CV_URL, file, options)
       .map((response: Response) => response.json())
       .catch((error: any) => Observable.throw(error.json()));
   }
