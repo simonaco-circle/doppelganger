@@ -4,6 +4,9 @@ import { HttpModule } from '@angular/http';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 import { AppComponent } from './app.component';
 import { FaceComponent } from './face/face.component';
@@ -15,7 +18,10 @@ import { FaceService } from './face/face.service';
     BrowserModule,
     BrowserAnimationsModule,
     HttpModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatCardModule,
+    MatIconModule,
+    MatButtonModule
   ],
   providers: [FaceService],
   bootstrap: [AppComponent]

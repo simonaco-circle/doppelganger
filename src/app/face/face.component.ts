@@ -49,5 +49,6 @@ export class FaceComponent implements OnInit {
   clearFile() {
     this.form.get('avatar').setValue(null);
     this.fileInput.nativeElement.value = '';
+    this.preview = null;
   }
 }
