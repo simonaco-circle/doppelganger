@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { HttpModule } from '@angular/http';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -9,7 +10,7 @@ import { FaceService } from './face/face.service';
 
 @NgModule({
   declarations: [AppComponent, FaceComponent],
-  imports: [BrowserModule, BrowserAnimationsModule],
+  imports: [BrowserModule, BrowserAnimationsModule, HttpModule],
   providers: [FaceService],
   bootstrap: [AppComponent]
 })
