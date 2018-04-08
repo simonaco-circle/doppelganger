@@ -1,6 +1,5 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { FaceService } from './face.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-face',
@@ -8,31 +7,22 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./face.component.css']
 })
 export class FaceComponent implements OnInit {
-  form: FormGroup;
-  preview: any;
-  loading = false;
+  base64encoded: any;
+  filename: string;
 
   @ViewChild('fileInput') fileInput: ElementRef;
-  constructor(private faceService: FaceService, private fb: FormBuilder) {
-    this.createForm();
-  }
-
-  createForm() {
-    this.form = this.fb.group({
-      avatar: null
-    });
-  }
+  constructor(private faceService: FaceService) {}
 
   ngOnInit() {}
 
   onFileChange(event) {
     if (event.target.files.length > 0) {
       const file = event.target.files[0];
-      this.form.get('avatar').setValue(file);
+      this.filename = file.name;
       const reader = new FileReader();
 
       reader.onload = (e: any) => {
-        this.preview = e.target.result;
+        this.base64encoded = e.target.result;
       };
 
       reader.readAsDataURL(event.target.files[0]);
@@ -40,15 +30,15 @@ export class FaceComponent implements OnInit {
   }
 
   onSubmit() {
-    this.loading = true;
-    this.faceService.getTags(this.form.get('avatar').value).subscribe(data => {
-      console.log(data);
-    });
+    this.faceService
+      .getTags(this.filename, this.base64encoded)
+      .subscribe(data => {
+        console.log(data);
+      });
   }
 
   clearFile() {
-    this.form.get('avatar').setValue(null);
     this.fileInput.nativeElement.value = '';
-    this.preview = null;
+    this.base64encoded = null;
   }
 }
