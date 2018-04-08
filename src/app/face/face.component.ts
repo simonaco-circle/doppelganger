@@ -9,6 +9,7 @@ import { FaceService } from './face.service';
 export class FaceComponent implements OnInit {
   base64encoded: any;
   filename: string;
+  doppelganger;
 
   @ViewChild('fileInput') fileInput: ElementRef;
   constructor(private faceService: FaceService) {}
@@ -34,6 +35,7 @@ export class FaceComponent implements OnInit {
       .getTags(this.filename, this.base64encoded)
       .subscribe(data => {
         console.log(data);
+        this.doppelganger = data;
       });
   }
 

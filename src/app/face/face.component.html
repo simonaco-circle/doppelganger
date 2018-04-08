@@ -6,6 +6,11 @@
     (change)="onFileChange($event)">
 
   <img mat-card-image [src]="base64encoded" alt="Photo of you" *ngIf="base64encoded">
+  <mat-card-content>
+    <p>
+      {{doppelganger | json}}
+    </p>
+  </mat-card-content>
   <mat-card-actions>
     <button mat-button (click)="onSubmit()">
       <mat-icon>thumb_up</mat-icon> OK</button>
