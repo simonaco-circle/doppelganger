@@ -35,12 +35,13 @@ export class FaceComponent implements OnInit {
       .getTags(this.filename, this.base64encoded)
       .subscribe(data => {
         console.log(data);
-        this.doppelganger = data;
+        this.doppelganger = data.doppelganger;
       });
   }
 
   clearFile() {
     this.fileInput.nativeElement.value = '';
     this.base64encoded = null;
+    this.doppelganger = null;
   }
 }
