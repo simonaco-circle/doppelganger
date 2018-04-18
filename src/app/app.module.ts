@@ -11,9 +11,10 @@ import { MatIconModule } from '@angular/material/icon';
 import { AppComponent } from './app.component';
 import { FaceComponent } from './face/face.component';
 import { FaceService } from './face/face.service';
+import { FullpageDirective } from './shared/directives/fullpage.directive';
 
 @NgModule({
-  declarations: [AppComponent, FaceComponent],
+  declarations: [AppComponent, FaceComponent, FullpageDirective],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,

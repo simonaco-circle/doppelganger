@@ -10,6 +10,7 @@ export class FaceComponent implements OnInit {
   base64encoded: any;
   filename: string;
   doppelganger;
+  background = 'https://doppelgangerapi813c.blob.core.windows.net/images/background.jpg';
 
   @ViewChild('fileInput') fileInput: ElementRef;
   constructor(private faceService: FaceService) {}
