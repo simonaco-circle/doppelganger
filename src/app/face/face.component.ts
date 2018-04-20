@@ -1,4 +1,5 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FaceService } from './face.service';
 
 @Component({
@@ -7,24 +8,31 @@ import { FaceService } from './face.service';
   styleUrls: ['./face.component.css']
 })
 export class FaceComponent implements OnInit {
-  base64encoded: any;
-  filename: string;
+  form: FormGroup;
+  picture: any;
   doppelganger;
   background = 'https://doppelgangerapi813c.blob.core.windows.net/images/background.jpg';
 
   @ViewChild('fileInput') fileInput: ElementRef;
-  constructor(private faceService: FaceService) {}
+  constructor(private faceService: FaceService, private fb: FormBuilder) {
+    this.createForm();
+  }
+  createForm() {
+    this.form = this.fb.group({
+      avatar: null
+    });
+  }
 
   ngOnInit() {}
 
   onFileChange(event) {
     if (event.target.files.length > 0) {
       const file = event.target.files[0];
-      this.filename = file.name;
+      this.form.get('avatar').setValue(file);
       const reader = new FileReader();
 
       reader.onload = (e: any) => {
-        this.base64encoded = e.target.result;
+        this.picture = e.target.result;
       };
 
       reader.readAsDataURL(event.target.files[0]);
@@ -32,17 +40,18 @@ export class FaceComponent implements OnInit {
   }
 
   onSubmit() {
-    this.faceService
-      .getTags(this.filename, this.base64encoded)
-      .subscribe(data => {
-        console.log(data);
-        this.doppelganger = data.doppelganger;
-      });
+    this.faceService.getTags(this.form.get('avatar').value).subscribe(data => {
+      const probability = Math.round(data.Predictions[0].Probability * 100);
+      this.doppelganger = `You look ${probability}% like ${
+        data.Predictions[0].Tag
+      }`;
+    });
   }
 
   clearFile() {
     this.fileInput.nativeElement.value = '';
-    this.base64encoded = null;
+    this.form.get('avatar').setValue(null);
+    this.picture = null;
     this.doppelganger = null;
   }
 }
